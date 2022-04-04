@@ -28,16 +28,15 @@ public class ProductService implements BeanPostProcessor {
     public Product findByTitle(String title) {
         return productList.stream().filter(product -> product.getTitle().equals(title)).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("value not found"));
-        //for(Product productFromList:productList){
-        //    if (title.equals(productFromList.getTitle())){
-        //        return productFromList;
+
     }
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        this.productList = new ArrayList<Product>();
         for (int i = 0; i < 10; i++) {
             this.productList.add(AppConfig.product());
         }
-        return this;
+        return bean;
     }
 }
